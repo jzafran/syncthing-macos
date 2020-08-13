@@ -22,7 +22,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Syncthing
-          path: ${{ github.workspace }}/syncthing-macos/Build/Products/Release/Syncthing-*.dmg
+          path: ${{ github.workspace }}/Build/Products/Release/Syncthing-*.dmg
           if-no-files-found: error
 
 #       - name: Create Release
