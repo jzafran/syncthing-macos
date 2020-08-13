@@ -1,0 +1,18 @@
+name: xcodebuild
+
+on:
+#   push:
+#     branches: [ develop ]
+  pull_request:
+#     branches: [ develop ]
+
+jobs:
+  build:
+    runs-on: macos-10.15
+    env:
+      # https://github.com/actions/virtual-environments/blob/main/images/macos/macos-10.15-Readme.md#xcode
+      DEVELOPER_DIR: /Applications/Xcode_10.3.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build
+        run: xcodebuild -derivedDataPath $(PWD) -configuration Release -scheme syncthing-dmg
