@@ -15,4 +15,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build
-        run: xcodebuild -derivedDataPath $(PWD) -configuration Release -scheme syncthing-dmg
+        run: xcodebuild -derivedDataPath ${PWD} -configuration Release -scheme syncthing-dmg
