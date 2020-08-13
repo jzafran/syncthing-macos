@@ -14,5 +14,7 @@ jobs:
       DEVELOPER_DIR: /Applications/Xcode_10.3.app/Contents/Developer
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: true
       - name: Build
         run: xcodebuild -derivedDataPath ${PWD} -configuration Release -scheme syncthing-dmg
