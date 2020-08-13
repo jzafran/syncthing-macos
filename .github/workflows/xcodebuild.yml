@@ -1,0 +1,53 @@
+name: xcodebuild
+
+on:
+#   push:
+#     branches: [ develop ]
+  pull_request:
+#     branches: [ develop ]
+
+jobs:
+  build:
+    runs-on: macos-10.15
+    env:
+      # https://github.com/actions/virtual-environments/blob/main/images/macos/macos-10.15-Readme.md#xcode
+      DEVELOPER_DIR: /Applications/Xcode_10.3.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Build
+        run: xcodebuild -derivedDataPath ${PWD} -configuration Release -scheme syncthing-dmg
+      - name: Save DMG as Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Syncthing
+          path: ${{ github.workspace }}/Build/Products/Release/Syncthing-*.dmg
+          if-no-files-found: error
+
+#       - name: Create Release
+#         id: create_release
+#         if: ${{ github.event_name == 'pull_request' }}
+# #         if: ${{ github.event_name == 'create' && github.event.ref_type == 'tag' }}
+#         uses: actions/create-release@v1
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         with:
+#           tag_name: ${{ github.ref }}
+#           release_name: Release ${{ github.ref }}
+#           draft: false
+#           prerelease: false
+
+#       - name: Upload Release Asset
+#         id: upload-release-asset 
+#         #if: ${{ github.event_name == 'pull_request' }}
+#         uses: actions/upload-release-asset@v1
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         with:
+#           upload_url: ${{ steps.create_release.outputs.upload_url }}
+#           asset_path: ./my-artifact.zip
+#           asset_name: my-artifact.zip
+#           asset_content_type: application/zip
+          
+  
